@@ -1,0 +1,38 @@
+post_install() {
+  systemd-sysusers artifactory-user.conf
+  chown -R artifactory /usr/share/webapps/artifactory
+
+  echo
+  echo 'For the Artifactory user guide and installation instructions please visit:'
+  echo
+  echo '  http://wiki.jfrog.org/confluence/display/RTF'
+  echo
+  echo 'The default administrator user is:'
+  echo '  username: admin'
+  echo '  password: password'
+  echo
+  echo 'The default port is 8081'
+  echo
+  echo 'Please configure an external database: https://www.jfrog.com/confluence/display/RTF/Configuring+the+Database'
+  echo
+}
+
+post_upgrade() {
+  echo "Removing tomcat work directory"
+  if [ -d /usr/share/webapps/artifactory/tomcat/work ]
+  then
+    rm -rf /usr/share/webapps/artifactory/tomcat/work
+  fi
+
+  if [ -d /usr/share/webapps/artifactory/tomcat/webapps/artifactory ]
+  then
+    echo "Removing Artifactory's exploded WAR directory"
+    rm -rf /usr/share/webapps/artifactory/tomcat/webapps/artifactory
+  fi
+
+  if [ -f /usr/share/webapps/artifactory/run/Artifactory.pid ]
+  then
+    echo "Removing Artifactory's PID file"
+    rm -f /usr/share/webapps/artifactory/run/Artifactory.pid
+  fi
+}
