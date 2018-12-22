@@ -1,6 +1,7 @@
 post_install() {
-  systemd-sysusers artifactory-user.conf
-  chown -R artifactory /usr/share/webapps/artifactory
+  systemd-sysusers artifactory.conf
+  systemd-tmpfiles --create artifactory.conf
+  chown -R artifactory:artifactory /etc/webapps/artifactory /usr/share/webapps/artifactory
 
   echo
   echo 'For the Artifactory user guide and installation instructions please visit:'
@@ -18,6 +19,10 @@ post_install() {
 }
 
 post_upgrade() {
+  getent passwd artifactory >/dev/null 2>&1 || systemd-sysusers artifactory.conf
+  systemd-tmpfiles --create artifactory.conf
+  chown -R artifactory:artifactory /etc/webapps/artifactory /usr/share/webapps/artifactory
+
   echo "Removing tomcat work directory"
   if [ -d /usr/share/webapps/artifactory/tomcat/work ]
   then
