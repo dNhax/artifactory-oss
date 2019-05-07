@@ -2,7 +2,7 @@
 
 _pkgname=artifactory
 pkgname=${_pkgname}-oss
-pkgver=6.9.1
+pkgver=6.10.0
 pkgrel=1
 pkgdesc='An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers'
 arch=('x86_64')
@@ -27,7 +27,7 @@ source=("jfrog-artifactory-oss-${pkgver}.zip::https://bintray.com/jfrog/artifact
         'artifactory-user.conf'
         'artifactory-tmpfile.conf'
         'artifactory.default')
-sha256sums=('83e99303990a444aadbda36ce5279640f17f99672917200cb1a62b13e5ecae82'
+sha256sums=('de9843fdf65653de1a3dbce52d08572051d618951ed538089d1d6127f173b0d1'
             'c7cc41af2479678e6fa605b91c20e6916f6cf374525e9d1552299bae5c5a2aaa'
             '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
             'ae3ddc469e5c8702f97df262e65ca1f73f3fda22ee293cd6a7ba87a0e9162467'
@@ -49,6 +49,8 @@ package() {
     rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/*.{exe,bat}
     rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/{install,uninstall}Service.sh
     rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/artifactoryctl
+    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/metadata/metadata-api-windows-amd64.exe
+    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/metadata/metadata-api-darwin-amd64
     rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/tomcat/bin/*.bat
     rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/COPYING* *.txt *.html
 
