@@ -2,7 +2,7 @@
 
 _pkgname=artifactory
 pkgname=${_pkgname}-oss
-pkgver=6.10.1
+pkgver=6.10.3
 pkgrel=1
 pkgdesc='An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers'
 arch=('x86_64')
@@ -27,7 +27,7 @@ source=("jfrog-artifactory-oss-${pkgver}.zip::https://bintray.com/jfrog/artifact
         'artifactory-user.conf'
         'artifactory-tmpfile.conf'
         'artifactory.default')
-sha256sums=('667407595c7bedfc92ae4949ac5beda8c6fb43af977252313d5d9edc4649c97b'
+sha256sums=('809b8227ec854d2dca789135a8d77df1dc6feaabc40875799cafc98c368fae59'
             'c7cc41af2479678e6fa605b91c20e6916f6cf374525e9d1552299bae5c5a2aaa'
             '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
             'ae3ddc469e5c8702f97df262e65ca1f73f3fda22ee293cd6a7ba87a0e9162467'
