@@ -1,6 +1,6 @@
 pkgbase = artifactory-oss
 	pkgdesc = An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers
-	pkgver = 6.11.0
+	pkgver = 6.11.1
 	pkgrel = 1
 	url = https://bintray.com/jfrog/product/JFrog-Artifactory-Oss/view
 	install = artifactory-oss.install
@@ -19,12 +19,12 @@ pkgbase = artifactory-oss
 	backup = etc/webapps/artifactory/db.properties
 	backup = etc/webapps/artifactory/logback.xml
 	backup = etc/webapps/artifactory/mimetypes.xml
-	source = jfrog-artifactory-oss-6.11.0.zip::https://bintray.com/jfrog/artifactory/download_file?file_path=jfrog-artifactory-oss-6.11.0.zip
+	source = jfrog-artifactory-oss-6.11.1.zip::https://bintray.com/jfrog/artifactory/download_file?file_path=jfrog-artifactory-oss-6.11.1.zip
 	source = artifactory.service
 	source = artifactory-user.conf
 	source = artifactory-tmpfile.conf
 	source = artifactory.default
-	sha256sums = b0dde75c77d363a517d0aff8df028c39ae390814038fed84bf622caae5b6d2e9
+	sha256sums = d976235c1b82a3061a28369e168161f185787c80e816c6e073ec97563a18fcce
 	sha256sums = c7cc41af2479678e6fa605b91c20e6916f6cf374525e9d1552299bae5c5a2aaa
 	sha256sums = 2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a
 	sha256sums = ae3ddc469e5c8702f97df262e65ca1f73f3fda22ee293cd6a7ba87a0e9162467
