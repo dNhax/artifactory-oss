@@ -1,34 +1,26 @@
 pkgbase = artifactory-oss
 	pkgdesc = An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers
-	pkgver = 6.17.0
+	pkgver = 7.2.1
 	pkgrel = 1
 	url = https://bintray.com/jfrog/product/JFrog-Artifactory-Oss/view
 	install = artifactory-oss.install
 	arch = x86_64
 	license = AGPLv2
-	depends = java-runtime-headless
+	depends = java-runtime=11
+	depends = inetutils
 	depends = net-tools
-	depends = bash
-	optdepends = apache: a fully featured webserver
-	optdepends = mysql: Fast SQL database server, community edition
-	optdepends = postgresql: A sophisticated object-relational DBMS
+	optdepends = nginx: Lightweight HTTP server and IMAP/POP3 proxy server (stable)
+	optdepends = nginx-mainline: Lightweight HTTP server and IMAP/POP3 proxy server (mainline)
+	optdepends = postgresql: Sophisticated object-relational DBMS
 	options = !strip
-	backup = etc/webapps/artifactory/artifactory.config.xml
-	backup = etc/webapps/artifactory/artifactory.system.properties
-	backup = etc/webapps/artifactory/binarystore.xml
-	backup = etc/webapps/artifactory/db.properties
-	backup = etc/webapps/artifactory/logback.xml
-	backup = etc/webapps/artifactory/mimetypes.xml
-	source = jfrog-artifactory-oss-6.17.0.zip::https://bintray.com/jfrog/artifactory/download_file?file_path=jfrog-artifactory-oss-6.17.0.zip
-	source = artifactory.service
-	source = artifactory-user.conf
-	source = artifactory-tmpfile.conf
-	source = artifactory.default
-	sha256sums = eb68a3cdbed2bf23c340009eeb1f843d81cb1b548338cf23784ea141f28f4602
-	sha256sums = c7cc41af2479678e6fa605b91c20e6916f6cf374525e9d1552299bae5c5a2aaa
+	source = jfrog-artifactory-oss-7.2.1-linux.tar.gz::https://jfrog.bintray.com/artifactory/org/artifactory/oss/jfrog-artifactory-oss/7.2.1/jfrog-artifactory-oss-7.2.1-linux.tar.gz
+	source = artifactory-oss.service
+	source = artifactory-oss-user.conf
+	source = artifactory-oss-tmpfile.conf
+	sha256sums = fd959e0c62d7d6555813dbf9c171f93e818628211948821ce40eb3ea90055026
+	sha256sums = 373c9b110263b98d0d60e3e432110bc2ae15e819fdb722fa2888c3c1dfd47891
 	sha256sums = 2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a
-	sha256sums = ae3ddc469e5c8702f97df262e65ca1f73f3fda22ee293cd6a7ba87a0e9162467
-	sha256sums = cd0bef2a92751060b44b5e50815749b49152a66e7726d5f0c26889c0bc77a3d5
+	sha256sums = dbc02c8e022c05bdc6ba6bf3e56b7be800142a0e0ad068db27a5b0d3f0a9dc9d
 
 pkgname = artifactory-oss
 
