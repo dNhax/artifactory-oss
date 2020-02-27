@@ -1,77 +1,74 @@
-# Maintainer: Tobias Hübner <dasNeutrum at gmx dot de>
+# Maintainer: Tobias Hübner <dasNeutrum@gmx.de>
 
-_pkgname=artifactory
-pkgname=${_pkgname}-oss
-pkgver=6.17.0
+pkgname=artifactory-oss
+pkgver=7.2.1
 pkgrel=1
 pkgdesc='An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers'
 arch=('x86_64')
-url="https://bintray.com/jfrog/product/JFrog-Artifactory-Oss/view"
+url='https://bintray.com/jfrog/product/JFrog-Artifactory-Oss/view'
 license=('AGPLv2')
 
-depends=('java-runtime-headless' 'net-tools' 'bash')
-optdepends=('apache: a fully featured webserver'
-            'mysql: Fast SQL database server, community edition'
-            'postgresql: A sophisticated object-relational DBMS')
+depends=(
+    'java-runtime=11'
+    'inetutils'
+    'net-tools'
+)
+optdepends=(
+    'nginx: Lightweight HTTP server and IMAP/POP3 proxy server (stable)'
+    'nginx-mainline: Lightweight HTTP server and IMAP/POP3 proxy server (mainline)'
+    'postgresql: Sophisticated object-relational DBMS'
+)
 
-backup=("etc/webapps/${_pkgname}/artifactory.config.xml"
-        "etc/webapps/${_pkgname}/artifactory.system.properties"
-        "etc/webapps/${_pkgname}/binarystore.xml"
-        "etc/webapps/${_pkgname}/db.properties"
-        "etc/webapps/${_pkgname}/logback.xml"
-        "etc/webapps/${_pkgname}/mimetypes.xml")
+# TODO
+# backup=(
+#     "etc/webapps/${pkgname}/system.yaml"
+#     "etc/webapps/${pkgname}/artifactory/..."
+# )
 
-install="$pkgname.install"
-source=("jfrog-artifactory-oss-${pkgver}.zip::https://bintray.com/jfrog/artifactory/download_file?file_path=jfrog-artifactory-oss-${pkgver}.zip"
-        'artifactory.service'
-        'artifactory-user.conf'
-        'artifactory-tmpfile.conf'
-        'artifactory.default')
-sha256sums=('eb68a3cdbed2bf23c340009eeb1f843d81cb1b548338cf23784ea141f28f4602'
-            'c7cc41af2479678e6fa605b91c20e6916f6cf374525e9d1552299bae5c5a2aaa'
-            '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
-            'ae3ddc469e5c8702f97df262e65ca1f73f3fda22ee293cd6a7ba87a0e9162467'
-            'cd0bef2a92751060b44b5e50815749b49152a66e7726d5f0c26889c0bc77a3d5')
+install="${pkgname}.install"
+source=(
+    "jfrog-${pkgname}-${pkgver}-linux.tar.gz::https://jfrog.bintray.com/artifactory/org/artifactory/oss/jfrog-${pkgname}/${pkgver}/jfrog-${pkgname}-${pkgver}-linux.tar.gz"
+    "${pkgname}.service"
+    "${pkgname}-user.conf"
+    "${pkgname}-tmpfile.conf"
+)
+sha256sums=(
+    'fd959e0c62d7d6555813dbf9c171f93e818628211948821ce40eb3ea90055026'
+    '373c9b110263b98d0d60e3e432110bc2ae15e819fdb722fa2888c3c1dfd47891'
+    '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
+    'dbc02c8e022c05bdc6ba6bf3e56b7be800142a0e0ad068db27a5b0d3f0a9dc9d'
+)
+
 options=('!strip')
 PKGEXT='.pkg.tar'
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # Copy everything except etc and logs to /user/share/webapps/artifactory.
-    install -dm755 "${pkgdir}/usr/share/webapps/${_pkgname}"
-    cp -dr --no-preserve=ownership {bin,misc,tomcat,webapps} "${pkgdir}/usr/share/webapps/${_pkgname}/"
+    # Install everything except etc and logs to /usr/share/webapps/artifactory-oss
+    install -dm755 "${pkgdir}/usr/share/webapps/${pkgname}"
+    cp -dr --no-preserve=ownership "app" "${pkgdir}/usr/share/webapps/${pkgname}/"
+    install -dm755 "${pkgdir}/usr/share/webapps/${pkgname}/var"
+    cp -dr --no-preserve=ownership "var/bootstrap" "${pkgdir}/usr/share/webapps/${pkgname}/var/"
 
-    # Install the license.
-    install -Dm644 "COPYING.AFFERO" "${pkgdir}/usr/share/doc/${_pkgname}/COPYING"
+    # Install the license
+    install -Dm644 "app/doc/COPYING.AFFERO" "${pkgdir}/usr/share/doc/${pkgname}/COPYING"
 
-    # Delete unused files.
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/*.{exe,bat}
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/{install,uninstall}Service.sh
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/artifactoryctl
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/metadata/metadata-api-windows-amd64.exe
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/bin/metadata/metadata-api-darwin-amd64
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/tomcat/bin/*.bat
-    rm -f ${pkgdir}/usr/share/webapps/${_pkgname}/COPYING* *.txt *.html
-
-    # Install the configuration files to /etc/webapps/artifactory.
-    install -Dm644 "etc/artifactory.config.xml" "${pkgdir}/etc/webapps/${_pkgname}/artifactory.config.xml"
-    install -Dm644 "etc/artifactory.system.properties" "${pkgdir}/etc/webapps/${_pkgname}/artifactory.system.properties"
-    install -Dm644 "etc/binarystore.xml" "${pkgdir}/etc/webapps/${_pkgname}/binarystore.xml"
-    install -Dm644 "etc/logback.xml" "${pkgdir}/etc/webapps/${_pkgname}/logback.xml"
-    install -Dm644 "etc/mimetypes.xml" "${pkgdir}/etc/webapps/${_pkgname}/mimetypes.xml"
+    # Install the configuration files to /etc/webapps/artifactory-oss
+    install -dm750 "${pkgdir}/etc/webapps/${pkgname}"
+    cp -dr --no-preserve=ownership "var/etc/." "${pkgdir}/etc/webapps/${pkgname}/"
 
     # Install the default configuration
-    cd "${srcdir}"
-    install -Dm644 "${_pkgname}.default" "${pkgdir}/usr/share/webapps/${_pkgname}/bin"
+    install -Dm644 "var/etc/system.full-template.yaml" "${pkgdir}/etc/webapps/${pkgname}/system.yaml"
 
     # Install the systemd configuration and service files
-    install -Dm644 "${_pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${_pkgname}.service"
-    install -Dm644 "${_pkgname}-user.conf" "${pkgdir}/usr/lib/sysusers.d/${_pkgname}.conf"
-    install -Dm644 "${_pkgname}-tmpfile.conf" "${pkgdir}/usr/lib/tmpfiles.d/${_pkgname}.conf"
+    cd "${srcdir}"
+    install -Dm644 "${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+    install -Dm644 "${pkgname}-user.conf" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
+    install -Dm644 "${pkgname}-tmpfile.conf" "${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf"
 
-    # Create symbolic links because Artifactory expects a specific directory layout.
-    ln -s "/var/log/${_pkgname}" "${pkgdir}/usr/share/webapps/${_pkgname}/logs"
-    ln -s "/run/${_pkgname}" "${pkgdir}/usr/share/webapps/${_pkgname}/run"
-    ln -s "/etc/webapps/${_pkgname}" "${pkgdir}/usr/share/webapps/${_pkgname}/etc"
+    # Create symbolic links because Artifactory expects a specific directory layout
+    ln -s "/etc/webapps/${pkgname}" "${pkgdir}/usr/share/webapps/${pkgname}/var/etc"
+    ln -s "/var/log/${pkgname}" "${pkgdir}/usr/share/webapps/${pkgname}/var/log"
+    ln -s "/run/${pkgname}" "${pkgdir}/usr/share/webapps/${pkgname}/app/run"
 }

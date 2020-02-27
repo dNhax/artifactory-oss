@@ -1,0 +1,16 @@
+[Unit]
+Description=An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers
+After=network.target
+
+[Service]
+Type=forking
+GuessMainPID=yes
+Restart=always
+RestartSec=60
+PIDFile=/var/run/artifactory-oss/artifactory.pid
+ExecStart=/usr/share/webapps/artifactory-oss/app/bin/artifactoryManage.sh start
+ExecStop=/usr/share/webapps/artifactory-oss/app/bin/artifactoryManage.sh stop
+
+[Install]
+WantedBy=multi-user.target
+Alias=artifactory.service

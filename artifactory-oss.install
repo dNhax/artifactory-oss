@@ -1,43 +1,43 @@
 post_install() {
-  systemd-sysusers artifactory.conf
-  systemd-tmpfiles --create artifactory.conf
-  chown -R artifactory:artifactory /etc/webapps/artifactory /usr/share/webapps/artifactory
+  systemd-sysusers artifactory-oss-user.conf
+  systemd-tmpfiles --create artifactory-oss-tmpfile.conf
+  chown -R artifactory:artifactory /etc/webapps/artifactory-oss /usr/share/webapps/artifactory-oss
 
   echo
   echo 'For the Artifactory user guide and installation instructions please visit:'
   echo
-  echo '  http://wiki.jfrog.org/confluence/display/RTF'
+  echo '  http://wiki.jfrog.org/confluence/display/JFROG'
   echo
   echo 'The default administrator user is:'
   echo '  username: admin'
   echo '  password: password'
   echo
-  echo 'The default port is 8081'
+  echo 'The default port is 8082'
   echo
-  echo 'Please configure an external database: https://www.jfrog.com/confluence/display/RTF/Configuring+the+Database'
+  echo 'Please configure an external database: https://www.jfrog.com/confluence/display/JFROG/Configuring+the+Database'
   echo
 }
 
 post_upgrade() {
-  getent passwd artifactory >/dev/null 2>&1 || systemd-sysusers artifactory.conf
-  systemd-tmpfiles --create artifactory.conf
-  chown -R artifactory:artifactory /etc/webapps/artifactory /usr/share/webapps/artifactory
+  getent passwd artifactory >/dev/null 2>&1 || systemd-sysusers artifactory-oss-user.conf
+  systemd-tmpfiles --create artifactory-oss-tmpfile.conf
+  chown -R artifactory:artifactory /etc/webapps/artifactory-oss /usr/share/webapps/artifactory-oss
 
   echo "Removing tomcat work directory"
-  if [ -d /usr/share/webapps/artifactory/tomcat/work ]
+  if [ -d /usr/share/webapps/artifactory-oss/app/artifactory/tomcat/work ]
   then
-    rm -rf /usr/share/webapps/artifactory/tomcat/work
+    rm -rf /usr/share/webapps/artifactory-oss/app/artifactory/tomcat/work
   fi
 
-  if [ -d /usr/share/webapps/artifactory/tomcat/webapps/artifactory ]
+  if [ -d /usr/share/webapps/artifactory-oss/app/artifactory/tomcat/webapps/artifactory ]
   then
     echo "Removing Artifactory's exploded WAR directory"
-    rm -rf /usr/share/webapps/artifactory/tomcat/webapps/artifactory
+    rm -rf /usr/share/webapps/artifactory-oss/app/artifactory/tomcat/webapps/artifactory
   fi
 
-  if [ -f /usr/share/webapps/artifactory/run/Artifactory.pid ]
+  if [ -f /var/run/artifactory-oss/artifactory.pid ]
   then
     echo "Removing Artifactory's PID file"
-    rm -f /usr/share/webapps/artifactory/run/Artifactory.pid
+    rm -f /var/run/artifactory-oss/artifactory.pid
   fi
 }
