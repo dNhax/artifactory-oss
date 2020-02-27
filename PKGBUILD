@@ -48,6 +48,8 @@ package() {
     # Install everything except etc and logs to /usr/share/webapps/artifactory-oss
     install -dm755 "${pkgdir}/usr/share/webapps/${pkgname}"
     cp -dr --no-preserve=ownership "app" "${pkgdir}/usr/share/webapps/${pkgname}/"
+    sed -i "s/export JF_ARTIFACTORY_PID=.*/export JF_ARTIFACTORY_PID=\/var\/run\/artifactory-oss\/artifactory\.pid/g" "${pkgdir}/usr/share/webapps/artifactory-oss/app/bin/artifactoryManage.sh"
+
     install -dm755 "${pkgdir}/usr/share/webapps/${pkgname}/var"
     cp -dr --no-preserve=ownership "var/bootstrap" "${pkgdir}/usr/share/webapps/${pkgname}/var/"
 
