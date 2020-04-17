@@ -1,7 +1,7 @@
 # Maintainer: Tobias Hübner <dasNeutrum@gmx.de>
 
 pkgname=artifactory-oss
-pkgver=7.3.2
+pkgver=7.4.1
 pkgrel=1
 pkgdesc='An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers'
 arch=('x86_64')
@@ -32,7 +32,7 @@ source=(
     "${pkgname}-user.conf"
     "${pkgname}-tmpfile.conf"
 )
-sha256sums=('bbda1a079871e245460a53e0f0826fb95cc7366c0e91bac598a7f402932a7544'
+sha256sums=('84d7202b3022b0f03158f7364534ba9c0900ab913aaa2f28e50e492fb3899692'
             '373c9b110263b98d0d60e3e432110bc2ae15e819fdb722fa2888c3c1dfd47891'
             '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
             'dbc02c8e022c05bdc6ba6bf3e56b7be800142a0e0ad068db27a5b0d3f0a9dc9d')
@@ -43,7 +43,7 @@ PKGEXT='.pkg.tar'
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # Install everything except etc and logs to /usr/share/webapps/artifactory-oss
+    # Install everything to /usr/share/webapps/artifactory-oss
     install -dm755 "${pkgdir}/usr/share/webapps/${pkgname}"
     cp -dr --no-preserve=ownership "app" "${pkgdir}/usr/share/webapps/${pkgname}/"
     sed -i "s/export JF_ARTIFACTORY_PID=.*/export JF_ARTIFACTORY_PID=\/var\/run\/artifactory-oss\/artifactory\.pid/g" "${pkgdir}/usr/share/webapps/artifactory-oss/app/bin/artifactoryManage.sh"
