@@ -1,7 +1,7 @@
 # Maintainer: Tobias Hübner <dasNeutrum@gmx.de>
 
 pkgname=artifactory-oss
-pkgver=7.4.1
+pkgver=7.4.3
 pkgrel=1
 pkgdesc='An advanced Binary Repository Manager for use by build tools, dependency management tools and build servers'
 arch=('x86_64')
@@ -32,7 +32,7 @@ source=(
     "${pkgname}-user.conf"
     "${pkgname}-tmpfile.conf"
 )
-sha256sums=('84d7202b3022b0f03158f7364534ba9c0900ab913aaa2f28e50e492fb3899692'
+sha256sums=('fc6ddd66a66e7f4015bbd2638aea32726c18ee368bd69ae40917902960538c74'
             '373c9b110263b98d0d60e3e432110bc2ae15e819fdb722fa2888c3c1dfd47891'
             '2e6285bb5ab580a8f4a47580ffacfec9a537190d94c9fe11a2f82c6e65a9ba8a'
             'dbc02c8e022c05bdc6ba6bf3e56b7be800142a0e0ad068db27a5b0d3f0a9dc9d')
