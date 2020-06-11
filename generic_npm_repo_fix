@@ -1,0 +1,4 @@
+# add this to 'catalina-properties'
+
+# make npm work again
+org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
