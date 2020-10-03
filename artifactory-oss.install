@@ -1,6 +1,6 @@
 post_install() {
-  systemd-sysusers artifactory-oss-user.conf
-  systemd-tmpfiles --create artifactory-oss-tmpfile.conf
+  systemd-sysusers artifactory-oss.conf
+  systemd-tmpfiles --create artifactory-oss.conf
   chown -R artifactory:artifactory /etc/webapps/artifactory-oss /usr/share/webapps/artifactory-oss
 
   echo
@@ -19,8 +19,8 @@ post_install() {
 }
 
 post_upgrade() {
-  getent passwd artifactory >/dev/null 2>&1 || systemd-sysusers artifactory-oss-user.conf
-  systemd-tmpfiles --create artifactory-oss-tmpfile.conf
+  getent passwd artifactory >/dev/null 2>&1 || systemd-sysusers artifactory-oss.conf
+  systemd-tmpfiles --create artifactory-oss.conf
   chown -R artifactory:artifactory /etc/webapps/artifactory-oss /usr/share/webapps/artifactory-oss
 
   echo "Removing tomcat work directory"
